@@ -9,6 +9,15 @@
 #define FAILURE false
 #define DICTIONARY_SIZE 100
 
+enum available_functions
+{
+    DISPLAY = 1,
+    SEARCH,
+    ADD,
+    REMOVE,
+    STOP
+};
+
 // tree node to store the definitions in
 typedef struct definitions_tree
 {
@@ -22,3 +31,5 @@ typedef struct dictionary
     char word[WORD_SIZE];
     definitions_node *definition;
 } dic_entry;
+
+void user_interface(void);
