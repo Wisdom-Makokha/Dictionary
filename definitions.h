@@ -1,20 +1,24 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<stddef.h>
-#include<string.h>
-#include<stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
 
-#define WORD_SIZE       30
+#define WORD_SIZE 30
 #define DEFINITION_SIZE 200
-#define PASS            0
-#define FAIL            1
+#define SUCCESS true
+#define FAILURE false
 #define DICTIONARY_SIZE 100
 
-struct entry
+// tree node to store the definitions in
+typedef struct definitions_tree
+{
+    char definition[DEFINITION_SIZE];
+    struct definitions_tree *next_def;
+} definitions_node;
+
+// structure for a dictionary entry
+typedef struct dictionary
 {
     char word[WORD_SIZE];
-    char definition[DEFINITION_SIZE];
-};
-
-/*ptrdiction = struct entry pointer to first element in the dictionary
-ptrcount = int pointer to the count of elements in the dictionary*/
+    definitions_node *definition;
+} dic_entry;

@@ -1,0 +1,14 @@
+root
+ |-storage
+    |-a
+    |-b
+    ...
+    |-z
+ |-functions
+    |-search
+    |-delete entry
+    |-addentry
+    |-sortentries
+    |-definitiontree
+ |-userinterface
+ |-main
