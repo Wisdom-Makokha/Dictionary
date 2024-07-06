@@ -2,9 +2,8 @@
 
 int main(void)
 {
-    // structure to hold a group of entries
-    dic_entry dictionary[DICTIONARY_SIZE];
-
+    int entries = 0;
+    read_entries_from_file("v", &entries);
     user_interface();
 
     exit(EXIT_SUCCESS);
