@@ -2,8 +2,8 @@
 
 int main(void)
 {
-    int entries = 0;
-    read_entries_from_file("v", &entries);
+    // int entries = 0;
+
     user_interface();
 
     exit(EXIT_SUCCESS);

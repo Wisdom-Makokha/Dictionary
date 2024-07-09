@@ -4,13 +4,13 @@
 CFLAGS = -Wall -Wextra
 
 #SOURCES
-SOURCES = main.c UI\terminal_interface.c functions\definitiontree.c functions\storage_handling.c
+SOURCES = main.c UI\terminal_interface.c functions\storage_handling.c
 
 #HEADERS
 HEADERS = definitions.h
 
 #objects
-OBJECTS = main.o UI\terminal_interface.o functions\definitiontree.o functions\storage_handling.o
+OBJECTS = main.o UI\terminal_interface.o  functions\storage_handling.o
 
 all: dictionary
 
@@ -22,6 +22,8 @@ dictionary: $(OBJECTS)
 main.o: definitions.h
 
 UI\terminal_interface.o: definitions.h
+
+functions\storage_handling.o: definitions.h
 
 clean:
 	rm -f $(OBJECTS)

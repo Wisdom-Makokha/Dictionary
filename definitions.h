@@ -25,19 +25,13 @@ enum available_functions
     STOP
 };
 
-// tree node to store the definitions in
-typedef struct definitions_tree
-{
-    char *definition;
-    struct definitions_tree *previous_def;
-    struct definitions_tree *next_def;
-} definitions_node;
-
 // structure for a dictionary entry
 typedef struct dictionary
 {
     char *word;
-    definitions_node *definition;
+    // an array of strings where the definitions will be stored
+    char **definitions;
+    int definition_count;
 } dic_entry;
 
 // structure for file details
@@ -48,20 +42,6 @@ typedef struct file_struct
     char *mode;
 } new_file;
 
-//prefix for all files
-const char file_prefix[] = "word_storage\\";
-// delimiters for the strtok
-const char *delimiter_word = "%%";
-const char *delimiter_definition = "&";
-
 void user_interface(void);
-definitions_node *create_definition_node(char *definition);
-bool add_definition(definitions_node *previous, definitions_node *new);
-// 4 scenarios for removing
-//  1. next is null
-//  2. next is not null
-//  3. previous is null
-//  4. previous is not null
-void remove_definition(definitions_node *previous, definitions_node **current_to_remove);
-dic_entry** read_entries_from_file(char *character, int *entry_number);
 bool open_file(new_file *file_to_open);
+void add_definition_to_entry(dic_entry *entry, char *definition);
