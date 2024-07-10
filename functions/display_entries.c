@@ -21,11 +21,11 @@ void display_entry(dic_entry *entry_display, FILE *fileptr)
 }
 
 // function to display 100 entries
-void display_100_entries(dic_entry **dictionary, int number_of_entries, int starting_entry, FILE *fileptr)
+void display_100_entries(full_dictionary dict_struct, int starting_entry, FILE *fileptr)
 {
     const int entries_to_print = 100;
 
     // print a total of 100 entries unless the are 
-    for(; starting_entry < entries_to_print && starting_entry < number_of_entries; starting_entry++)
-        display_entry(dictionary[starting_entry], fileptr);
+    for(; starting_entry < entries_to_print && starting_entry < dict_struct.number_of_entries; starting_entry++)
+        display_entry(dict_struct.entries[starting_entry], fileptr);
 }

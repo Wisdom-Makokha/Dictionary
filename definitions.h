@@ -22,7 +22,7 @@ enum available_functions
 };
 
 // structure for a dictionary entry
-typedef struct dictionary
+typedef struct dictionary_entry
 {
     char *word;
     // an array of strings where the definitions will be stored
@@ -38,11 +38,18 @@ typedef struct file_struct
     char *mode;
 } new_file;
 
+// structure for the dictionary to make it easier to work with
+typedef struct dictionary
+{
+    dic_entry **entries;
+    int number_of_entries;
+} full_dictionary;
+
 void user_interface(void);
 bool open_file(new_file *file_to_open);
 void add_definition_to_entry(dic_entry *entry, char *definition);
 dic_entry * create_new_entry(void);
 void add_entry_data(dic_entry *entry, char *word, char *definition);
-dic_entry *search_entry(dic_entry **dictionary, char *word, int number_of_entries, int starting_entry);
+dic_entry *search_entry(full_dictionary dict_struct, int starting_entry, char *word);
 void display_entry(dic_entry *entry_display, FILE *fileptr);
-void display_100_entries(dic_entry **dictionary, int number_of_entries, int starting_entry, FILE *fileptr);
+void display_100_entries(full_dictionary dict_struct, int starting_entry, FILE *fileptr);

@@ -14,7 +14,19 @@ const char *delimiter_definition = "&";
 
 
 // function to read a csv file for the entries
+bool read_dictionary_to_mem(full_dictionary *dict_struct)
+{
+    //initialise the struct for the file
+    new_file dictionary_csv;
+    dictionary_csv.filename = "source/OPTED-Dictionary.csv";
+    dictionary_csv.mode = "r";
 
+    if(!open_file(&dictionary_csv))
+        return FAILURE;
+
+    fclose(dictionary_csv.fileptr);
+    return SUCCESS;
+}
 
 // function to open a file in a specific mode as specified in the structure new_file
 bool open_file(new_file *file_to_open)
