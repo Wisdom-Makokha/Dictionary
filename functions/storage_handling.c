@@ -13,7 +13,7 @@ const char *delimiter_definition = "&";
 // function to write to my own storage system to
 
 
-// function to read a csv file
+// function to read a csv file for the entries
 
 
 // function to open a file in a specific mode as specified in the structure new_file

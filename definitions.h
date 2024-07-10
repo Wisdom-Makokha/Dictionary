@@ -3,8 +3,6 @@
 #include <string.h>
 #include <stdbool.h>
 
-#define WORD_SIZE 30
-#define DEFINITION_SIZE 200
 #define SUCCESS true
 #define FAILURE false
 #define DICTIONARY_SIZE 100
@@ -45,3 +43,4 @@ typedef struct file_struct
 void user_interface(void);
 bool open_file(new_file *file_to_open);
 void add_definition_to_entry(dic_entry *entry, char *definition);
+dic_entry * create_new_entry(void);
