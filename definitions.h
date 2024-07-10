@@ -5,8 +5,6 @@
 
 #define SUCCESS true
 #define FAILURE false
-#define DICTIONARY_SIZE 100
-#define FILENAME_LENGTH 20
 #define LINE_ENTRY 1024
 
 // format for storage of dictionary entries
@@ -44,3 +42,7 @@ void user_interface(void);
 bool open_file(new_file *file_to_open);
 void add_definition_to_entry(dic_entry *entry, char *definition);
 dic_entry * create_new_entry(void);
+void add_entry_data(dic_entry *entry, char *word, char *definition);
+dic_entry *search_entry(dic_entry **dictionary, char *word, int number_of_entries, int starting_entry);
+void display_entry(dic_entry *entry_display, FILE *fileptr);
+void display_100_entries(dic_entry **dictionary, int number_of_entries, int starting_entry, FILE *fileptr);

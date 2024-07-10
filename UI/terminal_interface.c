@@ -43,3 +43,9 @@ void user_interface(void)
             printf("\n\n");
     }
 }
+
+//function for the interface for searching
+void search_interface(void)
+{
+    
+}

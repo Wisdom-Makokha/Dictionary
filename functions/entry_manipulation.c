@@ -10,6 +10,8 @@ dic_entry * create_new_entry(void)
     new_entry->word = NULL;
     new_entry->definitions = NULL;
     new_entry->definition_count = 0;
+
+    return new_entry;
 }
 
 //function to add data to an entry
