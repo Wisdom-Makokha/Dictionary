@@ -1,5 +1,7 @@
 {
     "files.associations": {
-        "definitions.h": "c"
+        "*.embeddedhtml": "html",
+        "definitions.h": "c",
+        "sql.h": "c"
     }
 }

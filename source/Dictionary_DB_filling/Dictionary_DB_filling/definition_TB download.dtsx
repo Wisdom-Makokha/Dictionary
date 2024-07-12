@@ -1,0 +1,1256 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="7/11/2024 8:33:00 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="OMNITOP"
+  DTS:CreatorName="OMNITOP\wisdo"
+  DTS:DTSID="{90DDD79C-677C-4C89-81D7-241774C1AF0E}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5397.1"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Package1"
+  DTS:PackageType="5"
+  DTS:VersionBuild="27"
+  DTS:VersionGUID="{FDF23352-D83F-43DD-B018-04A77BFBC09E}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Dictionary CSV source]"
+      DTS:CreationName="FLATFILE"
+      DTS:DTSID="{0A9A94B7-0481-45D8-8DB8-2580098ADD12}"
+      DTS:ObjectName="Dictionary CSV source">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:Format="Delimited"
+          DTS:LocaleID="1033"
+          DTS:HeaderRowDelimiter="_x000D__x000A_"
+          DTS:ColumnNamesInFirstDataRow="True"
+          DTS:RowDelimiter=""
+          DTS:TextQualifier="_x003C_none_x003E_"
+          DTS:CodePage="1252"
+          DTS:ConnectionString="C:\Users\wisdo\Documents\Programs\C programs\Dictionary project\source\OPTED-Dictionary.csv">
+          <DTS:FlatFileColumns>
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Word"
+              DTS:DTSID="{4AC07928-6253-44F2-B42C-AEB30F57BFD0}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Count"
+              DTS:DTSID="{BA62A8FC-DB75-4857-83C9-1D35D6015775}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="POS"
+              DTS:DTSID="{1AB52268-E81F-45DB-8CD2-DADFFC02706C}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x000D__x000A_"
+              DTS:MaximumWidth="1000"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Definition"
+              DTS:DTSID="{219CED14-C454-4270-8F8B-B0EA26C6054B}"
+              DTS:CreationName="" />
+          </DTS:FlatFileColumns>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[OMNITOP.Dictionary]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{4541B9D9-0E74-4947-8BDE-C79A41B34C3B}"
+      DTS:ObjectName="OMNITOP.Dictionary">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=OMNITOP;Initial Catalog=Dictionary;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-Package1-{4541B9D9-0E74-4947-8BDE-C79A41B34C3B}OMNITOP.Dictionary;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Load data into definition table"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{CDAABB29-D7E8-43C7-A4FF-F26E5A031EFC}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load data into definition table"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Load data into definition table\conversion to sortable type"
+              componentClassID="Microsoft.DataConvert"
+              contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Data Conversion"
+              name="conversion to sortable type"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load data into definition table\conversion to sortable type.Inputs[Data Conversion Input]"
+                  name="Data Conversion Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load data into definition table\conversion to sortable type.Inputs[Data Conversion Input].Columns[word]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="word"
+                      lineageId="Package\Load data into definition table\Word ID source.Outputs[OLE DB Source Output].Columns[word]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load data into definition table\conversion to sortable type.Outputs[Data Conversion Output]"
+                  exclusionGroup="1"
+                  name="Data Conversion Output"
+                  synchronousInputId="Package\Load data into definition table\conversion to sortable type.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load data into definition table\conversion to sortable type.Outputs[Data Conversion Output].Columns[Copy of word]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="100"
+                      lineageId="Package\Load data into definition table\conversion to sortable type.Outputs[Data Conversion Output].Columns[Copy of word]"
+                      name="Copy of word"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load data into definition table\Word ID source.Outputs[OLE DB Source Output].Columns[word]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load data into definition table\conversion to sortable type.Outputs[Data Conversion Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Data Conversion Error Output"
+                  synchronousInputId="Package\Load data into definition table\conversion to sortable type.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load data into definition table\conversion to sortable type.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load data into definition table\conversion to sortable type.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load data into definition table\conversion to sortable type.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load data into definition table\conversion to sortable type.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load data into definition table\Definitions DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="Definitions DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[definition_TB]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load data into definition table\Definitions DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[OMNITOP.Dictionary]"
+                  connectionManagerRefId="Package.ConnectionManagers[OMNITOP.Dictionary]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load data into definition table\Definitions DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load data into definition table\Definitions DB Destination.Inputs[OLE DB Destination Input].Columns[word_ID]"
+                      cachedDataType="i4"
+                      cachedName="word_ID"
+                      externalMetadataColumnId="Package\Load data into definition table\Definitions DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[word_ID]"
+                      lineageId="Package\Load data into definition table\Merge Join.Outputs[Merge Join Output].Columns[word_ID]" />
+                    <inputColumn
+                      refId="Package\Load data into definition table\Definitions DB Destination.Inputs[OLE DB Destination Input].Columns[Definition]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="1000"
+                      cachedName="Definition"
+                      externalMetadataColumnId="Package\Load data into definition table\Definitions DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[definitions]"
+                      lineageId="Package\Load data into definition table\Merge Join.Outputs[Merge Join Output].Columns[Definition]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load data into definition table\Definitions DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[definition_ID]"
+                      dataType="i4"
+                      name="definition_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Load data into definition table\Definitions DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[word_ID]"
+                      dataType="i4"
+                      name="word_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Load data into definition table\Definitions DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[definitions]"
+                      codePage="1252"
+                      dataType="text"
+                      name="definitions" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load data into definition table\Definitions DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Load data into definition table\Definitions DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load data into definition table\Definitions DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load data into definition table\Definitions DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load data into definition table\Definitions DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load data into definition table\Definitions DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load data into definition table\Definitions source"
+              componentClassID="Microsoft.FlatFileSource"
+              contactInfo="Flat File Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Flat File Source"
+              localeId="1033"
+              name="Definitions source"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether zero-length columns are treated as null."
+                  name="RetainNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of an output column containing the file name. If no name is specified, no output column containing the file name will be generated."
+                  name="FileNameColumnName"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load data into definition table\Definitions source.Connections[FlatFileConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Dictionary CSV source]"
+                  connectionManagerRefId="Package.ConnectionManagers[Dictionary CSV source]"
+                  name="FlatFileConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load data into definition table\Definitions source.Outputs[Flat File Source Output]"
+                  name="Flat File Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load data into definition table\Definitions source.Outputs[Flat File Source Output].Columns[Word]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load data into definition table\Definitions source.Outputs[Flat File Source Output].ExternalColumns[Word]"
+                      length="50"
+                      lineageId="Package\Load data into definition table\Definitions source.Outputs[Flat File Source Output].Columns[Word]"
+                      name="Word"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load data into definition table\Definitions source.Outputs[Flat File Source Output].Columns[Definition]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load data into definition table\Definitions source.Outputs[Flat File Source Output].ExternalColumns[Definition]"
+                      length="1000"
+                      lineageId="Package\Load data into definition table\Definitions source.Outputs[Flat File Source Output].Columns[Definition]"
+                      name="Definition"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load data into definition table\Definitions source.Outputs[Flat File Source Output].ExternalColumns[Word]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Word" />
+                    <externalMetadataColumn
+                      refId="Package\Load data into definition table\Definitions source.Outputs[Flat File Source Output].ExternalColumns[Count]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Count" />
+                    <externalMetadataColumn
+                      refId="Package\Load data into definition table\Definitions source.Outputs[Flat File Source Output].ExternalColumns[POS]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="POS" />
+                    <externalMetadataColumn
+                      refId="Package\Load data into definition table\Definitions source.Outputs[Flat File Source Output].ExternalColumns[Definition]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1000"
+                      name="Definition" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load data into definition table\Definitions source.Outputs[Flat File Source Error Output]"
+                  isErrorOut="true"
+                  name="Flat File Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load data into definition table\Definitions source.Outputs[Flat File Source Error Output].Columns[Flat File Source Error Output Column]"
+                      codePage="1252"
+                      dataType="text"
+                      description="Flat File Source Error Output Column"
+                      lineageId="Package\Load data into definition table\Definitions source.Outputs[Flat File Source Error Output].Columns[Flat File Source Error Output Column]"
+                      name="Flat File Source Error Output Column" />
+                    <outputColumn
+                      refId="Package\Load data into definition table\Definitions source.Outputs[Flat File Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load data into definition table\Definitions source.Outputs[Flat File Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load data into definition table\Definitions source.Outputs[Flat File Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load data into definition table\Definitions source.Outputs[Flat File Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load data into definition table\Merge Join"
+              componentClassID="Microsoft.MergeJoin"
+              contactInfo="Merge Join;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Combine two sorted data flows into one using the FULL, LEFT, or INNER join. We recommend this transformation when data flows can be sorted at their sources."
+              name="Merge Join"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of join to perform."
+                  name="JoinType"
+                  typeConverter="JoinType">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the number of columns in the ordering key."
+                  name="NumKeyColumns">1</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the null values are treated as equal values."
+                  name="TreatNullsAsEqual">true</property>
+                <property
+                  dataType="System.Int32"
+                  description="Indicates the requested maximum buffers per input before blocking."
+                  name="MaxBuffersPerInput">5</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Load data into definition table\Merge Join.Inputs[Merge Join Left Input]"
+                  hasSideEffects="true"
+                  name="Merge Join Left Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load data into definition table\Merge Join.Inputs[Merge Join Left Input].Columns[Word]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Word"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\Load data into definition table\Sorted by words.Outputs[Sort Output].Columns[Word]" />
+                    <inputColumn
+                      refId="Package\Load data into definition table\Merge Join.Inputs[Merge Join Left Input].Columns[Definition]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="1000"
+                      cachedName="Definition"
+                      lineageId="Package\Load data into definition table\Sorted by words.Outputs[Sort Output].Columns[Definition]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+                <input
+                  refId="Package\Load data into definition table\Merge Join.Inputs[Merge Join Right Input]"
+                  hasSideEffects="true"
+                  name="Merge Join Right Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load data into definition table\Merge Join.Inputs[Merge Join Right Input].Columns[Copy of word]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="Copy of word"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\Load data into definition table\Sorted words.Outputs[Sort Output].Columns[Copy of word]" />
+                    <inputColumn
+                      refId="Package\Load data into definition table\Merge Join.Inputs[Merge Join Right Input].Columns[word_ID]"
+                      cachedDataType="i4"
+                      cachedName="word_ID"
+                      lineageId="Package\Load data into definition table\Sorted words.Outputs[Sort Output].Columns[word_ID]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load data into definition table\Merge Join.Outputs[Merge Join Output]"
+                  name="Merge Join Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load data into definition table\Merge Join.Outputs[Merge Join Output].Columns[word_ID]"
+                      dataType="i4"
+                      lineageId="Package\Load data into definition table\Merge Join.Outputs[Merge Join Output].Columns[word_ID]"
+                      name="word_ID">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Load data into definition table\Merge Join.Inputs[Merge Join Right Input].Columns[word_ID]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load data into definition table\Merge Join.Outputs[Merge Join Output].Columns[Definition]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1000"
+                      lineageId="Package\Load data into definition table\Merge Join.Outputs[Merge Join Output].Columns[Definition]"
+                      name="Definition">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Load data into definition table\Merge Join.Inputs[Merge Join Left Input].Columns[Definition]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load data into definition table\Sorted by words"
+              componentClassID="Microsoft.Sort"
+              contactInfo="Sort;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Sorts input data in ascending or descending order when it cannot be sorted at its source. For example, sort sales data by 'customer id' before it is written to a flat file and delivered to another department. Note: We do not recommend this transformation for large data flows."
+              name="Sorted by words"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the Sort transformation removes rows with duplicate sort values."
+                  name="EliminateDuplicates">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the maximum number of threads to use for sorting."
+                  expressionType="Notify"
+                  name="MaximumThreads">-1</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Load data into definition table\Sorted by words.Inputs[Sort Input]"
+                  name="Sort Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load data into definition table\Sorted by words.Inputs[Sort Input].Columns[Word]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Word"
+                      lineageId="Package\Load data into definition table\Definitions source.Outputs[Flat File Source Output].Columns[Word]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">1</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load data into definition table\Sorted by words.Inputs[Sort Input].Columns[Definition]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="1000"
+                      cachedName="Definition"
+                      lineageId="Package\Load data into definition table\Definitions source.Outputs[Flat File Source Output].Columns[Definition]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load data into definition table\Sorted by words.Outputs[Sort Output]"
+                  isSorted="true"
+                  name="Sort Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load data into definition table\Sorted by words.Outputs[Sort Output].Columns[Word]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Load data into definition table\Sorted by words.Outputs[Sort Output].Columns[Word]"
+                      name="Word"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Load data into definition table\Definitions source.Outputs[Flat File Source Output].Columns[Word]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load data into definition table\Sorted by words.Outputs[Sort Output].Columns[Definition]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1000"
+                      lineageId="Package\Load data into definition table\Sorted by words.Outputs[Sort Output].Columns[Definition]"
+                      name="Definition">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Load data into definition table\Definitions source.Outputs[Flat File Source Output].Columns[Definition]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load data into definition table\Sorted words"
+              componentClassID="Microsoft.Sort"
+              contactInfo="Sort;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Sorts input data in ascending or descending order when it cannot be sorted at its source. For example, sort sales data by 'customer id' before it is written to a flat file and delivered to another department. Note: We do not recommend this transformation for large data flows."
+              name="Sorted words"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the Sort transformation removes rows with duplicate sort values."
+                  name="EliminateDuplicates">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the maximum number of threads to use for sorting."
+                  expressionType="Notify"
+                  name="MaximumThreads">-1</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Load data into definition table\Sorted words.Inputs[Sort Input]"
+                  name="Sort Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load data into definition table\Sorted words.Inputs[Sort Input].Columns[word_ID]"
+                      cachedDataType="i4"
+                      cachedName="word_ID"
+                      lineageId="Package\Load data into definition table\Word ID source.Outputs[OLE DB Source Output].Columns[word_ID]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load data into definition table\Sorted words.Inputs[Sort Input].Columns[word]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="word"
+                      lineageId="Package\Load data into definition table\Word ID source.Outputs[OLE DB Source Output].Columns[word]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load data into definition table\Sorted words.Inputs[Sort Input].Columns[Copy of word]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="Copy of word"
+                      lineageId="Package\Load data into definition table\conversion to sortable type.Outputs[Data Conversion Output].Columns[Copy of word]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">1</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load data into definition table\Sorted words.Outputs[Sort Output]"
+                  isSorted="true"
+                  name="Sort Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load data into definition table\Sorted words.Outputs[Sort Output].Columns[word_ID]"
+                      dataType="i4"
+                      lineageId="Package\Load data into definition table\Sorted words.Outputs[Sort Output].Columns[word_ID]"
+                      name="word_ID">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Load data into definition table\Word ID source.Outputs[OLE DB Source Output].Columns[word_ID]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load data into definition table\Sorted words.Outputs[Sort Output].Columns[word]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      lineageId="Package\Load data into definition table\Sorted words.Outputs[Sort Output].Columns[word]"
+                      name="word">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Load data into definition table\Word ID source.Outputs[OLE DB Source Output].Columns[word]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load data into definition table\Sorted words.Outputs[Sort Output].Columns[Copy of word]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      lineageId="Package\Load data into definition table\Sorted words.Outputs[Sort Output].Columns[Copy of word]"
+                      name="Copy of word"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Load data into definition table\conversion to sortable type.Outputs[Data Conversion Output].Columns[Copy of word]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load data into definition table\Word ID source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="Word ID source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[word_TB]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load data into definition table\Word ID source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[OMNITOP.Dictionary]"
+                  connectionManagerRefId="Package.ConnectionManagers[OMNITOP.Dictionary]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load data into definition table\Word ID source.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load data into definition table\Word ID source.Outputs[OLE DB Source Output].Columns[word_ID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load data into definition table\Word ID source.Outputs[OLE DB Source Output].ExternalColumns[word_ID]"
+                      lineageId="Package\Load data into definition table\Word ID source.Outputs[OLE DB Source Output].Columns[word_ID]"
+                      name="word_ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load data into definition table\Word ID source.Outputs[OLE DB Source Output].Columns[word]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load data into definition table\Word ID source.Outputs[OLE DB Source Output].ExternalColumns[word]"
+                      length="100"
+                      lineageId="Package\Load data into definition table\Word ID source.Outputs[OLE DB Source Output].Columns[word]"
+                      name="word"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load data into definition table\Word ID source.Outputs[OLE DB Source Output].ExternalColumns[word_ID]"
+                      dataType="i4"
+                      name="word_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Load data into definition table\Word ID source.Outputs[OLE DB Source Output].ExternalColumns[word]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      name="word" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load data into definition table\Word ID source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load data into definition table\Word ID source.Outputs[OLE DB Source Error Output].Columns[word_ID]"
+                      dataType="i4"
+                      lineageId="Package\Load data into definition table\Word ID source.Outputs[OLE DB Source Error Output].Columns[word_ID]"
+                      name="word_ID" />
+                    <outputColumn
+                      refId="Package\Load data into definition table\Word ID source.Outputs[OLE DB Source Error Output].Columns[word]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      lineageId="Package\Load data into definition table\Word ID source.Outputs[OLE DB Source Error Output].Columns[word]"
+                      name="word" />
+                    <outputColumn
+                      refId="Package\Load data into definition table\Word ID source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load data into definition table\Word ID source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load data into definition table\Word ID source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load data into definition table\Word ID source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load data into definition table.Paths[Data Conversion Output]"
+              endId="Package\Load data into definition table\Sorted words.Inputs[Sort Input]"
+              name="Data Conversion Output"
+              startId="Package\Load data into definition table\conversion to sortable type.Outputs[Data Conversion Output]" />
+            <path
+              refId="Package\Load data into definition table.Paths[Flat File Source Output]"
+              endId="Package\Load data into definition table\Sorted by words.Inputs[Sort Input]"
+              name="Flat File Source Output"
+              startId="Package\Load data into definition table\Definitions source.Outputs[Flat File Source Output]" />
+            <path
+              refId="Package\Load data into definition table.Paths[Merge Join Output]"
+              endId="Package\Load data into definition table\Definitions DB Destination.Inputs[OLE DB Destination Input]"
+              name="Merge Join Output"
+              startId="Package\Load data into definition table\Merge Join.Outputs[Merge Join Output]" />
+            <path
+              refId="Package\Load data into definition table.Paths[OLE DB Source Output]"
+              endId="Package\Load data into definition table\conversion to sortable type.Inputs[Data Conversion Input]"
+              name="OLE DB Source Output"
+              startId="Package\Load data into definition table\Word ID source.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\Load data into definition table.Paths[Sort Output]"
+              endId="Package\Load data into definition table\Merge Join.Inputs[Merge Join Left Input]"
+              name="Sort Output"
+              startId="Package\Load data into definition table\Sorted by words.Outputs[Sort Output]" />
+            <path
+              refId="Package\Load data into definition table.Paths[Sort Output1]"
+              endId="Package\Load data into definition table\Merge Join.Inputs[Merge Join Right Input]"
+              name="Sort Output"
+              startId="Package\Load data into definition table\Sorted words.Outputs[Sort Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="220,42"
+          Id="Package\Load data into definition table"
+          TopLeft="487,179" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Load data into definition table">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="163,42"
+          Id="Package\Load data into definition table\Definitions source"
+          TopLeft="447,73" />
+        <NodeLayout
+          Size="156,42"
+          Id="Package\Load data into definition table\Sorted by words"
+          TopLeft="437,228" />
+        <EdgeLayout
+          Id="Package\Load data into definition table.Paths[Flat File Source Output]"
+          TopLeft="528.5,115">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-13.5,113"
+              Start="0,0"
+              End="-13.5,105.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,52.5"
+                    Point2="0,56.5"
+                    Point3="-4,56.5" />
+                  <mssgle:LineSegment
+                    End="-9.5,56.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-9.5,56.5"
+                    Point2="-13.5,56.5"
+                    Point3="-13.5,60.5" />
+                  <mssgle:LineSegment
+                    End="-13.5,105.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-14.75,61.5,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="153,42"
+          Id="Package\Load data into definition table\Word ID source"
+          TopLeft="724,79" />
+        <NodeLayout
+          Size="207,42"
+          Id="Package\Load data into definition table\conversion to sortable type"
+          TopLeft="735,180" />
+        <NodeLayout
+          Size="141,42"
+          Id="Package\Load data into definition table\Sorted words"
+          TopLeft="741,298" />
+        <EdgeLayout
+          Id="Package\Load data into definition table.Paths[OLE DB Source Output]"
+          TopLeft="800.5,121">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="38,59"
+              Start="0,0"
+              End="38,51.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,25.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,25.5"
+                    Point2="0,29.5"
+                    Point3="4,29.5" />
+                  <mssgle:LineSegment
+                    End="34,29.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="34,29.5"
+                    Point2="38,29.5"
+                    Point3="38,33.5" />
+                  <mssgle:LineSegment
+                    End="38,51.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load data into definition table.Paths[Data Conversion Output]"
+          TopLeft="838.5,222">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-27,76"
+              Start="0,0"
+              End="-27,68.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,34" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,34"
+                    Point2="0,38"
+                    Point3="-4,38" />
+                  <mssgle:LineSegment
+                    End="-23,38" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-23,38"
+                    Point2="-27,38"
+                    Point3="-27,42" />
+                  <mssgle:LineSegment
+                    End="-27,68.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="130,42"
+          Id="Package\Load data into definition table\Merge Join"
+          TopLeft="638,396" />
+        <EdgeLayout
+          Id="Package\Load data into definition table.Paths[Sort Output]"
+          TopLeft="515,270">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="188,126"
+              Start="0,0"
+              End="188,118.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,59" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,59"
+                    Point2="0,63"
+                    Point3="4,63" />
+                  <mssgle:LineSegment
+                    End="184,63" />
+                  <mssgle:CubicBezierSegment
+                    Point1="184,63"
+                    Point2="188,63"
+                    Point3="188,67" />
+                  <mssgle:LineSegment
+                    End="188,118.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="86,68,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load data into definition table.Paths[Sort Output1]"
+          TopLeft="811.5,340">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-88.1666666666666,56"
+              Start="0,0"
+              End="-88.1666666666666,48.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,29.1914893617021" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,29.1914893617021"
+                    Point2="0,33.1914893617021"
+                    Point3="-4,33.1914893617021" />
+                  <mssgle:LineSegment
+                    End="-84.1666666666666,33.1914893617021" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-84.1666666666666,33.1914893617021"
+                    Point2="-88.1666666666666,33.1914893617021"
+                    Point3="-88.1666666666666,37.1914893617021" />
+                  <mssgle:LineSegment
+                    End="-88.1666666666666,48.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-52.0833333333333,38.1914893617021,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="202,42"
+          Id="Package\Load data into definition table\Definitions DB Destination"
+          TopLeft="593,504" />
+        <EdgeLayout
+          Id="Package\Load data into definition table.Paths[Merge Join Output]"
+          TopLeft="703,438">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-9,66"
+              Start="0,0"
+              End="-9,58.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,29" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,29"
+                    Point2="0,33"
+                    Point3="-4,33" />
+                  <mssgle:LineSegment
+                    End="-5,33" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-5,33"
+                    Point2="-9,33"
+                    Point3="-9,37" />
+                  <mssgle:LineSegment
+                    End="-9,58.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-12.5,38,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load data into definition table\Word ID source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load data into definition table\Definitions DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

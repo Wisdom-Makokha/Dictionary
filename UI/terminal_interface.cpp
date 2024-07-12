@@ -1,7 +1,7 @@
 #include "..\definitions.h"
 
 //function for the main user interface, this is the first thing the user will see when they start the application
-void user_interface(void)
+void user_interface(full_dictionary *dictionary)
 {
     int response;
     bool stop = false;
@@ -12,8 +12,6 @@ void user_interface(void)
         printf("\n(Type an integer corresponding to your option then press <enter>)\n\n");
         printf("  -Display dictionary entries: %d\n", DISPLAY);
         printf("  -Search for an entry: %d\n", SEARCH);
-        printf("  -Add an entry to the dictionary: %d\n", ADD);
-        printf("  -Remove an entry: %d\n", REMOVE);
         printf("  -Stop: %d\n", STOP);
 
         printf("Enter response: ");
@@ -26,12 +24,6 @@ void user_interface(void)
             break;
         case SEARCH:
             printf("\nSearching now...\n");
-            break;
-        case ADD:
-            printf("\nAdding...\n");
-            break;
-        case REMOVE:
-            printf("\nRemoving...\n");
             break;
         case STOP:
             printf("\nStopping...\n");

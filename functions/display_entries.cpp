@@ -17,7 +17,9 @@ void display_entry(dic_entry *entry_display, FILE *fileptr)
 
     // print the definitions for the word
     for(int i = 0; i < entry_display->definition_count; i++)
-        fprintf(fileptr, "\t%d. %s\n", i, entry_display->definitions[i]);
+        fprintf(fileptr, "\t%d. %s\n", i + 1, entry_display->definitions[i]);
+
+    fprintf(fileptr, "\n");
 }
 
 // function to display 100 entries
