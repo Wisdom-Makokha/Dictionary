@@ -1,2 +1,0 @@
-#include <sqlapi/SQLAPI.h>
-
