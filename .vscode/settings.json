@@ -1,7 +1,0 @@
-{
-    "files.associations": {
-        "*.embeddedhtml": "html",
-        "definitions.h": "c",
-        "sql.h": "c"
-    }
-}

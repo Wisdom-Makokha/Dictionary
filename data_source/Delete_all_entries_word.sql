@@ -1,1 +1,0 @@
-DELETE FROM dbo.word_table
