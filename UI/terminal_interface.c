@@ -1,4 +1,4 @@
-#include "..\definitions.h"
+#include "..\definition\definitions.h"
 
 //function for the main user interface, this is the first thing the user will see when they start the application
 void user_interface(full_dictionary *dictionary)

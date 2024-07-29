@@ -1,36 +1,21 @@
 # Makefile
 
 # Compiler
-COMPILER = g++
+COMPILER = gcc
 
 # Compiler flags
-CPPFLAGS = -Wall -Wextra -std=c++17
+CFLAGS = -Wall -Wextra
 
 #HEADERS
-HEADERS = definition/definitions.h
+HEADERS = $(wildcard headers/*.h)
 
 #objects
-OBJECTS = main/main.o UI/terminal_interface.o  dictionary_functions/searching.o dictionary_functions/entry_manipulation.o 
-OBJECTS += dictionary_functions/display_entries.o dictionary_functions/definitiontree.o
+SOURCES = main/main.c
+SOURCES += $(wildcard dictionary_functions/*.c)
+SOURCES += $(wildcard UI/*.c)
 
 all: dictionary
 
 # dictionary executable
-dictionary: $(OBJECTS)
-	$(COMPILER) $(CPPFLAGS) -o dictionary $(OBJECTS)
-
-#object compilation
-main.o: $(HEADERS)
-
-UI\terminal_interface.o: $(HEADERS)
-
-functions\searching.o: $(HEADERS)
-
-functions\entry_manipulation.o: $(HEADERS)
-
-functions\display_entries.o: $(HEADERS)
-
-functions\definitiontree.o: $(HEADERS)
-
-clean:
-	rm -f $(OBJECTS)
+dictionary: $(SOURCES)
+	$(COMPILER) $(CFLAGS) -o dictionary $(SOURCES) $(HEADERS)
