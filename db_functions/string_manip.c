@@ -146,7 +146,7 @@ void free_connection_part(connection_part *part)
 {
     // free the memory for the value first
     // remember to skip this
-    free(part->value);
+    // free(part->value);
     free(part);
 }
 

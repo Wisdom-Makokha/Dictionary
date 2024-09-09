@@ -62,7 +62,7 @@ int initialise_ODBC(HENV *h_environment, HDBC *h_connection, int argc, char **ar
         printf("Error Processing terminal arguements\n");
 
     // confirm options set through the terminal
-    confirm_options(options_to_set);
+    // confirm_options(options_to_set);
 
     // create a struct to store all details needed for a manual connection
     connection_struct *connection_str = create_connection_struct();

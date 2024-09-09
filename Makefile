@@ -12,10 +12,11 @@ HEADERS = $(wildcard headers/*.h)
 #objects
 SOURCES = main/main.c
 SOURCES += $(wildcard dictionary_functions/*.c)
+SOURCES += $(wildcard db_functions/*.c)
 SOURCES += $(wildcard UI/*.c)
 
 all: dictionary
 
 # dictionary executable
 dictionary: $(SOURCES)
-	$(COMPILER) $(CFLAGS) -o dictionary $(SOURCES) $(HEADERS)
+	$(COMPILER) $(CFLAGS) -o dictionary $(SOURCES) $(HEADERS) -lodbc32 -luser32

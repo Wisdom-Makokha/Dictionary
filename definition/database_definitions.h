@@ -17,19 +17,19 @@
         if (rt_code != SQL_SUCCESS)                                     \
         {                                                               \
             get_diagnostics((#odbc_function), (handle), (handle_type)); \
-            result = OP_FAILURE;                                           \
+            result = OP_FAILURE;                                        \
         }                                                               \
         if (rt_code == SQL_ERROR || rt_code == SQL_NO_DATA)             \
         {                                                               \
             fprintf(stderr, "Error in: " #odbc_function "\n");          \
-            result = OP_FAILURE;                                           \
+            result = OP_FAILURE;                                        \
             goto Exit;                                                  \
         }                                                               \
     }
 #define CHECK_MEMORY_GOTO_EXIT(ptr, result)                           \
     if (ptr == NULL)                                                  \
     {                                                                 \
-        result = OP_FAILURE;                                             \
+        result = OP_FAILURE;                                          \
         fprintf(stderr, "Error in memory allocation for %s\n", #ptr); \
         goto Exit;                                                    \
     }
@@ -53,6 +53,7 @@ typedef enum
     USER_INPUT_ERROR,
     DATA_TRUNCATION,
     DEFAULT_VALUE_USED,
+    RECORD_RETRIEVAL_ERROR,
     UNKNOWN
 } error_codes;
 

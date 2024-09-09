@@ -1,18 +1,18 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include "../definition/database_definitions.h"
 #include <string.h>
-#include <stdbool.h>
 
 #define SUCCESS true
 #define FAILURE false
 #define LINE_ENTRY 1024
-#define NULL_ENTRY (dic_entry *) 0
+#define NULL_ENTRY (dic_entry *)0
+#define MAX_WORD_SIZE 128
+#define MAX_DEF_SIZE 1024
 
 // format for storage of dictionary entries
 // entry1: word%definition1&definition2...& newline
 // entry2: word%definition1&definition2...& newline
 
-//enum for functions on the home page for the user interface
+// enum for functions on the home page for the user interface
 enum available_functions
 {
     DISPLAY = 1,
@@ -29,14 +29,6 @@ typedef struct dictionary_entry
     int definition_count;
 } dic_entry;
 
-// structure for file details
-typedef struct file_struct
-{
-    char *filename;
-    FILE *fileptr;
-    char *mode;
-} new_file;
-
 // structure for the dictionary to make it easier to work with
 typedef struct dictionary
 {
@@ -44,11 +36,10 @@ typedef struct dictionary
     int number_of_entries;
 } full_dictionary;
 
-void user_interface(full_dictionary *dictionary);
+void user_interface(full_dictionary *dictionary, HSTMT h_statement);
 bool open_file(new_file *file_to_open);
-int new_open_file(new_file *file_to_open);
 void add_definition_to_entry(dic_entry *entry, char *definition);
-dic_entry * create_new_entry(void);
+dic_entry *create_new_entry(void);
 void free_entry(dic_entry *entry);
 void add_entry_data(dic_entry *entry, char *word, char *definition);
 full_dictionary *create_dictionary(void);
@@ -56,5 +47,6 @@ void free_dictionary(full_dictionary *dictionary);
 void add_entry_to_dictionary(full_dictionary *dict_struct, dic_entry *entry);
 dic_entry *search_entry(full_dictionary dict_struct, int starting_entry, char *word);
 void display_entry(dic_entry *entry_display, FILE *fileptr);
-void display_100_entries(full_dictionary dict_struct, int starting_entry, FILE *fileptr);
+void display_no_of_entries(full_dictionary *dict_struct, int starting_entry, FILE *fileptr, int number_of_entries);
 void read_line(char *line, FILE *fileptr);
+int retrieve_records(HSTMT *h_statement, full_dictionary *dictionary, unsigned *starting_entry, int number_of_entries);

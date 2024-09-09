@@ -38,6 +38,7 @@ int write_logs(char *state, long int code, char *message, const char *function)
 
     // print the entry to the file
     fprintf(log_file.fileptr, log_entry_format, state, code, message, function);
+    // fprintf(stdout, log_entry_format, state, code, message, function);
 
     return OP_SUCCESS;
 }
