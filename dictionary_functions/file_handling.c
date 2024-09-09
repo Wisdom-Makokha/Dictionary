@@ -12,26 +12,3 @@ bool open_file(new_file *file_to_open)
 
     return SUCCESS;
 }
-
-// function to read a line from a file
-void read_line(char *line, FILE *fileptr)
-{
-    static int longest_line = 0;
-    int index = 0;
-    char character;
-
-    while ((character = fgetc(fileptr)) != '\n' && character != EOF)
-    {
-        // skip any quotation characters
-        // if (character != '\"')
-
-        line[index] = character;
-        index++;
-    }
-
-    if (index > longest_line)
-    {
-        longest_line = index;
-        printf("Longest line: %d\n", longest_line);
-    }
-}

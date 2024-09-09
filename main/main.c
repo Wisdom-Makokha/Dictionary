@@ -6,7 +6,8 @@ int main(void)
     // declare ODBC variables
     HENV h_environment = NULL;
     HDBC h_connection = NULL;
-    HSTMT h_statement = NULL;
+    HSTMT h_display_statement = NULL;
+    HSTMT h_search_statement = NULL;
     int result;
 
     full_dictionary *new_dict = create_dictionary();
@@ -29,28 +30,26 @@ int main(void)
     }
 
     TRYODBC(
-        h_statement,
+        h_display_statement,
         SQL_HANDLE_STMT,
-        SQLAllocHandle(SQL_HANDLE_STMT, h_connection, &h_statement),
+        SQLAllocHandle(SQL_HANDLE_STMT, h_connection, &h_display_statement),
         result)
 
-    unsigned entries = 1;
+    TRYODBC(
+        h_search_statement,
+        SQL_HANDLE_STMT,
+        SQLAllocHandle(SQL_HANDLE_STMT, h_connection, &h_search_statement),
+        result)
 
-    result = retrieve_records(&h_statement, new_dict, &entries, 100);
-    if (result == OP_FAILURE)
-    {
-        fprintf(stderr, "Error retrieving records!\n");
-        goto Exit;
-    }
-    display_no_of_entries(new_dict, 0, stdout, 20);
+    user_interface(new_dict, &h_display_statement, &h_search_statement);
 
 Exit:
     if (new_dict != NULL)
         free_dictionary(new_dict);
 
     // free statement handles
-    if (h_statement)
-        SQLFreeHandle(SQL_HANDLE_STMT, h_statement);
+    if (h_display_statement)
+        SQLFreeHandle(SQL_HANDLE_STMT, h_display_statement);
 
     // disconnect and free connection handle
     if (h_connection)
@@ -68,6 +67,10 @@ Exit:
     // free environment handle
     if (h_environment)
         SQLFreeHandle(SQL_HANDLE_ENV, h_environment);
+
+    // show there were issues
+    if (result == OP_FAILURE)
+        fprintf(stderr, "There were errors encountered during running\n");
 
     exit(EXIT_SUCCESS);
 }

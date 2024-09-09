@@ -1,8 +1,6 @@
 #include "../definition/definitions.h"
 
-// function to do the initial setup for the dictionary app
-// it will start with retrieving a hundred words from the database
-// and putting them within our dictionary
+// function to retrieve a given number of records from the database
 int retrieve_records(HSTMT *h_statement, full_dictionary *dictionary, unsigned *starting_entry, int number_of_entries)
 {
     // printf("Starting record retrieval!\n");
@@ -14,11 +12,11 @@ int retrieve_records(HSTMT *h_statement, full_dictionary *dictionary, unsigned *
 
     // statement to retrieve the word
     // format for the word statement
-    char *statement_format = "SELECT word_TB.word, definition_TB.definitions FROM word_TB JOIN definition_TB on word_TB.word_ID = definition_TB.word_ID WHERE word_TB.word_ID BETWEEN %d AND %d";
+    char *statement_format = "SELECT word_TB.word, definition_TB.definitions FROM word_TB INNER JOIN definition_TB on word_TB.word_ID = definition_TB.word_ID WHERE word_TB.word_ID BETWEEN %d AND %d";
     size_t length = 0;
 
     length = snprintf(NULL, length, statement_format, *starting_entry, number_of_entries);
-    printf("Size of created string: %lld\n", length);
+    // printf("Size of created string: %lld\n", length);
 
     // allocate memory
     char *statement_str = create_string_memory(length + 1);
@@ -35,15 +33,16 @@ int retrieve_records(HSTMT *h_statement, full_dictionary *dictionary, unsigned *
     TRYODBC(
         *h_statement,
         SQL_HANDLE_STMT,
-        SQLExecDirect(*h_statement, (SQLCHAR *)statement_str, (SQLINTEGER)length),
+        SQLExecDirect(*h_statement, (SQLCHAR *)statement_str, SQL_NTS),
         result)
 
     // printf("Binding columns to string pointers\n");
     SQLBindCol(*h_statement, 1, SQL_C_CHAR, word, MAX_WORD_SIZE, &tr_word_len);
     SQLBindCol(*h_statement, 2, SQL_C_CHAR, definition, MAX_DEF_SIZE, &tr_definition_len);
 
-    dic_entry *new_entry = create_new_entry();
+    dic_entry *new_entry;
 
+    // fetch the records from the prepared database
     while (SQL_SUCCEEDED(SQLFetch(*h_statement)))
     {
         // printf("Number of records: %d\n", number_of_records);
