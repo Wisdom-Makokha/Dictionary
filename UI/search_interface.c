@@ -7,7 +7,7 @@ void search_interface(HSTMT *h_statement)
     printf("Enter the word you want to search for: ");
     fgets(word, MAX_WORD_SIZE, stdin);
 
-    // try to have only
+    // try to have only a normal string without any spaces, tabs or newline characters
     char *token = strtok(word, " \n\t\v");
 
     if (strlen(token) < MAX_WORD_SIZE)

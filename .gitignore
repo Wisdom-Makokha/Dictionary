@@ -10,8 +10,11 @@
 #ignore .vscode folder
 .vscode/
 
+#ignore files in the generated folder
+generated/
+
 #ignore text input files
 *.txt
 
 #ignore database integration solution
-data_source/Dictionary_DB_filling/
+data_source/Refresh_DB fill/
