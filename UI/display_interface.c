@@ -1,7 +1,7 @@
 #include "../definition/definitions.h"
 
 // function to display entries, it displays 10 entries at a tim
-void display_interface(HSTMT *h_statement, full_dictionary *dictionary)
+void display_interface(HSTMT *h_statement)
 {
     unsigned int starting_entry = 1;
     const int no_of_entries_to_display = 10;
@@ -15,6 +15,14 @@ void display_interface(HSTMT *h_statement, full_dictionary *dictionary)
     bool stop = false;
     do
     {
+        full_dictionary *dictionary = create_dictionary();
+        if (dictionary == NULL)
+        {
+            fprintf(stderr, "Error allocating memory to new pointer in: %s\n", __func__);
+            write_logs("MEMALLOC", MEM_ALLOC_ERROR, "Error allocating memory to new pointer", __func__);
+            break;
+        }
+
         // retrieve records and display them
         retrieve_records(h_statement, dictionary, &starting_entry, starting_entry + no_of_entries_to_display);
         display_no_of_entries(dictionary, 0, stdout, no_of_entries_to_display);
@@ -22,9 +30,10 @@ void display_interface(HSTMT *h_statement, full_dictionary *dictionary)
         // query the user for their option
         printf("\n\nView the next %d options or the previous %d options\n", no_of_entries_to_display, no_of_entries_to_display);
         printf("(Enter a number corresponding to your response)\n");
-        printf("Next: %d\n", NEXT);
-        printf("Previous: %d\n", PREVIOUS);
+        printf("Next: %d  ", NEXT);
+        printf("Previous: %d  ", PREVIOUS);
         printf("Stop: %d\n", STOP);
+        printf("\nEnter response: ");
 
         char response[6];
         fgets(response, 6, stdin);
@@ -53,6 +62,5 @@ void display_interface(HSTMT *h_statement, full_dictionary *dictionary)
         }
 
         free_dictionary(dictionary);
-        dictionary = create_dictionary();
     } while (!stop);
 }

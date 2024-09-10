@@ -1,7 +1,7 @@
 #include "..\definition\definitions.h"
 
 //function for the main user interface, this is the first thing the user will see when they start the application
-void user_interface(full_dictionary *dictionary, HSTMT *h_display, HSTMT *h_search)
+void user_interface( HSTMT *h_display, HSTMT *h_search)
 {
     int response;
     bool stop = false;
@@ -23,7 +23,7 @@ void user_interface(full_dictionary *dictionary, HSTMT *h_display, HSTMT *h_sear
         {
         case DISPLAY:
             printf("\nDisplaying now...\n");
-            display_interface(h_display, dictionary);
+            display_interface(h_display);
             break;
         case SEARCH:
             printf("\nSearching now...\n");

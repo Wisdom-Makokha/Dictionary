@@ -18,11 +18,12 @@ void search_interface(HSTMT *h_statement)
         if (found != NULL)
         {
             display_entry(found, stdout);
+            free(found);
             return;
         }
         else
             printf("Entry not found!\n");
     }
     else
-        printf("Your input value was too long\n");
+        printf("Your input value was too large for the expected response\n");
 }

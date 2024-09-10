@@ -11,39 +11,26 @@ dic_entry *search_entry(char *word, HSTMT *h_statement)
     int result = OP_SUCCESS;
     unsigned number_of_records = 0;
     SQLCHAR definition[MAX_DEF_SIZE];
-    SQLLEN tr_definition_len = 0, tr_word_len = 0;
+    SQLLEN tr_definition_len = 0, tr_word_len = 0, bind_word = 0;
 
-    char *statement_format = "SELECT definition_TB.definitions FROM definition_TB WHERE word_ID = (SELECT word_TB.word_ID FROM word_TB WHERE word = '%s')";
-    size_t length = 0;
+    // shifted to using a parameterised statement that is shown by the ? in the statement
+    // when preparing the statement, the data source will expect a bound parameter be tied to it
+    char *statement_str = "SELECT definition_TB.definitions FROM definition_TB WHERE word_ID = (SELECT word_TB.word_ID FROM word_TB WHERE word = ?)";
 
-    // check that our word does not exceed a certain size
-    length = snprintf(NULL, length, statement_format, word);
-    if (length >= (strlen(statement_format) + MAX_WORD_SIZE))
-    {
-        write_logs("LONG_STR", MAX_STR_LENGTH_EXCEEDED_ERROR, "Length of search statement exceeds allowed limit", __func__);
-        result = OP_FAILURE;
-        goto Exit;
-    }
+    // prepare the statement
+    SQLPrepare(*h_statement, (SQLCHAR *)statement_str, SQL_NTS);
 
-    // allocate memory for the statement
-    char *statement_str = create_string_memory(length + 1);
-    CHECK_MEMORY_GOTO_EXIT(statement_str, result);
-
-    if ((unsigned)(snprintf(statement_str, length + 1, statement_format, word)) > length + 1)
-    {
-        write_logs("TRUNC", DATA_TRUNCATION, "sprintf truncated data", __func__);
-        result = OP_FAILURE;
-        goto Exit;
-    }
+    // bind the parameters
+    SQLBindParameter(*h_statement, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_CHAR, MAX_WORD_SIZE, 0, (SQLPOINTER)word, 0, &bind_word);
 
     // execute the statement
     TRYODBC(
         *h_statement,
         SQL_HANDLE_STMT,
-        SQLExecDirect(*h_statement, (SQLCHAR *)statement_str, SQL_NTS),
+        SQLExecute(*h_statement),
         result)
 
-    // bind the resulting columns to a 
+    // bind the resulting columns to a
     SQLBindCol(*h_statement, 1, SQL_C_CHAR, definition, MAX_DEF_SIZE, &tr_definition_len);
 
     // retrieve records and put the data in memory
@@ -55,6 +42,8 @@ dic_entry *search_entry(char *word, HSTMT *h_statement)
         add_entry_data(new_entry, word, (char *)definition);
         number_of_records++;
     }
+    // close the cursor after executing a select statement to make the handle reusable for another statement
+    SQLCloseCursor(*h_statement);
 
     // check that we have retrieved some records
     if (number_of_records == 0)
@@ -63,9 +52,6 @@ dic_entry *search_entry(char *word, HSTMT *h_statement)
         goto Exit;
     }
 Exit:
-    if (statement_str != NULL)
-        free(statement_str);
-
     if (result == OP_FAILURE)
         return NULL_ENTRY;
     else

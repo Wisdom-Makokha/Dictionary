@@ -25,8 +25,22 @@ dic_entry *create_new_entry(void)
 void add_entry_data(dic_entry *entry, char *word, char *definition)
 {
     // check if nothing is in the word
-    if (entry->word == NULL)
+    if (entry->word == NULL && word != NULL)
+    {
+        // this is an attempt to be more efficient and in control of the memory for the words
+        // the length of the word is checked and cutoff if it exceeds our set limit
+        int word_length = strlen(word);
+
+        if (word_length > MAX_WORD_SIZE)
+        {
+            fprintf(stderr, "Word truncated in the function: %s\n", __func__);
+            write_logs("TRUNC", DATA_TRUNCATION, "Word truncated", __func__);
+            word_length = MAX_WORD_SIZE;
+            word[word_length - 1] = '\0';
+        }
+
         entry->word = strdup(word);
+    }
 
     // add the definition to the word
     add_definition_to_entry(entry, definition);
@@ -56,17 +70,6 @@ void add_entry_to_dictionary(full_dictionary *dict_struct, dic_entry *entry)
     dict_struct->number_of_entries++;
     dict_struct->entries = (dic_entry **)realloc(dict_struct->entries, sizeof(dic_entry *) * dict_struct->number_of_entries);
     dict_struct->entries[dict_struct->number_of_entries - 1] = entry;
-}
-
-// function to clear the data stored in an entry in preparation for new data to be stored there
-void clear_entry(dic_entry *entry)
-{
-    entry->word = NULL;
-
-    for (int i = entry->definition_count - 1; i >= 0; i--)
-        free(entry->definitions[i]);
-
-    entry->definition_count = 0;
 }
 
 // function to free the memory for an entry

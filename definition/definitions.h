@@ -37,9 +37,9 @@ typedef struct dictionary
 } full_dictionary;
 
 // UI
-void user_interface(full_dictionary *dictionary, HSTMT *h_display, HSTMT *h_search);
+void user_interface(HSTMT *h_display, HSTMT *h_search);
 void search_interface(HSTMT *h_statement);
-void display_interface(HSTMT *h_statement, full_dictionary *dictionary);
+void display_interface(HSTMT *h_statement);
 
 // file handling
 bool open_file(new_file *file_to_open);

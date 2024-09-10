@@ -10,16 +10,13 @@ int main(void)
     HSTMT h_search_statement = NULL;
     int result;
 
-    full_dictionary *new_dict = create_dictionary();
-    CHECK_MEMORY_GOTO_EXIT(new_dict, result);
-
     // these options could be set through the terminal but for now they are set through this instead
     // the options are meant to be permanent
-    char *specifications[] = {"program_name",
-                              "-f", "dictionary_connnection",
-                              "-db", "Dictionary",
-                              "-dsn", "Test_DSN",
-                              "-s", "dictionary_connection"};
+    char *specifications[] = {
+        "program_name",
+        "-f",
+        "dictionary_connection",
+    };
 
     int number_of_args = _countof(specifications);
 
@@ -41,12 +38,9 @@ int main(void)
         SQLAllocHandle(SQL_HANDLE_STMT, h_connection, &h_search_statement),
         result)
 
-    user_interface(new_dict, &h_display_statement, &h_search_statement);
+    user_interface(&h_display_statement, &h_search_statement);
 
 Exit:
-    if (new_dict != NULL)
-        free_dictionary(new_dict);
-
     // free statement handles
     if (h_display_statement)
         SQLFreeHandle(SQL_HANDLE_STMT, h_display_statement);

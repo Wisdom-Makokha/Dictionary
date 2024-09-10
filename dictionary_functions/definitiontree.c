@@ -12,10 +12,25 @@
 // function to add a new definition to an entry
 void add_definition_to_entry(dic_entry *entry, char *definition)
 {
-    // remove the quotation marks around the string
-    definition[strlen(definition) - 3] = '\0';
+    // remove the first 3 quotation marks
+    definition += 3;
+
+    // get definition length then reduce the length to remove the last 3 quotation marks
+    int length = strlen(definition) - 3;
+
+    // remove the quotation marks
+    // since there's a possibility that those quotation marks are what is affecting the length of the given string
+    definition[length] = '\0';
+
+    if ((length) > MAX_DEF_SIZE)
+    {
+        fprintf(stderr, "Definition truncated in the function: %s\nString length: %d\n", __func__, length);
+        write_logs("TRUNC", DATA_TRUNCATION, "Definition truncated", __func__);
+        length = MAX_DEF_SIZE;
+        definition[length - 1] = '\0';
+    }
 
     entry->definition_count++;
     entry->definitions = (char **)realloc(entry->definitions, sizeof(char *) * entry->definition_count);
-    entry->definitions[entry->definition_count - 1] = strdup(definition + 3);
+    entry->definitions[entry->definition_count - 1] = strdup(definition);
 }

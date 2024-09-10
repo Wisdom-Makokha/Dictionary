@@ -1,39 +1,33 @@
 #include "../definition/definitions.h"
 
 // function to retrieve a given number of records from the database
-int retrieve_records(HSTMT *h_statement, full_dictionary *dictionary, unsigned *starting_entry, int number_of_entries)
+int retrieve_records(HSTMT *h_statement, full_dictionary *dictionary, unsigned *starting_entry, int ending_entry)
 {
     // printf("Starting record retrieval!\n");
     int result = OP_SUCCESS;
     unsigned number_of_records = 0;
     SQLCHAR word[MAX_WORD_SIZE];
     SQLCHAR definition[MAX_DEF_SIZE];
-    SQLLEN tr_definition_len = 0, tr_word_len = 0;
+    SQLLEN tr_definition_len = 0, tr_word_len = 0, bind_word = 0, bind_def = 0;
 
     // statement to retrieve the word
     // format for the word statement
-    char *statement_format = "SELECT word_TB.word, definition_TB.definitions FROM word_TB INNER JOIN definition_TB on word_TB.word_ID = definition_TB.word_ID WHERE word_TB.word_ID BETWEEN %d AND %d";
-    size_t length = 0;
+    char *statement_str = "SELECT word_TB.word, definition_TB.definitions FROM word_TB INNER JOIN definition_TB on word_TB.word_ID = definition_TB.word_ID WHERE word_TB.word_ID BETWEEN ? AND ?";
 
-    length = snprintf(NULL, length, statement_format, *starting_entry, number_of_entries);
-    // printf("Size of created string: %lld\n", length);
+    // could probably proceed by just parameterising the directly executed statement
+    // and binding them to our variables but I want to use prepare instead just because
+    // prepare the statement
+    SQLPrepare(*h_statement, (SQLCHAR *)statement_str, SQL_NTS);
 
-    // allocate memory
-    char *statement_str = create_string_memory(length + 1);
-    CHECK_MEMORY_GOTO_EXIT(statement_str, result);
-
-    if ((unsigned)(snprintf(statement_str, length + 1, statement_format, *starting_entry, number_of_entries)) > length + 1)
-    {
-        write_logs("TRUNC", DATA_TRUNCATION, "sprintf truncated data", __func__);
-        result = OP_FAILURE;
-        goto Exit;
-    }
+    // bind the parameters
+    SQLBindParameter(*h_statement, 1, SQL_PARAM_INPUT, SQL_C_ULONG, SQL_INTEGER, 10, 0, (SQLPOINTER) starting_entry, 0, &bind_word);
+    SQLBindParameter(*h_statement, 2, SQL_PARAM_INPUT, SQL_C_ULONG, SQL_INTEGER, 10, 0, (SQLPOINTER) &ending_entry, 0, &bind_def);
 
     // printf("Executing statement: %s\n", statement_str);
     TRYODBC(
         *h_statement,
         SQL_HANDLE_STMT,
-        SQLExecDirect(*h_statement, (SQLCHAR *)statement_str, SQL_NTS),
+        SQLExecute(*h_statement),
         result)
 
     // printf("Binding columns to string pointers\n");
@@ -69,6 +63,8 @@ int retrieve_records(HSTMT *h_statement, full_dictionary *dictionary, unsigned *
 
         number_of_records++;
     }
+    // close the cursor after executing a select statement to make the handle reusable for another statement
+    SQLCloseCursor(*h_statement);
 
     // check that we have retrieved some records
     if (number_of_records == 0)
@@ -78,9 +74,6 @@ int retrieve_records(HSTMT *h_statement, full_dictionary *dictionary, unsigned *
     }
 
 Exit:
-    if (statement_str != NULL)
-        free(statement_str);
-
     if (result == OP_FAILURE)
         write_logs("INIT", RECORD_RETRIEVAL_ERROR, "Failed to retrieve records", __func__);
 
