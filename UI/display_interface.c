@@ -4,12 +4,12 @@
 void display_interface(HSTMT *h_statement)
 {
     unsigned int starting_entry = 1;
-    const int no_of_entries_to_display = 10;
+    const unsigned no_of_entries_to_display = 10;
     enum display_options
     {
         NEXT = 1,
         PREVIOUS,
-        STOP
+        STOP_DISP
     };
 
     bool stop = false;
@@ -32,7 +32,7 @@ void display_interface(HSTMT *h_statement)
         printf("(Enter a number corresponding to your response)\n");
         printf("Next: %d  ", NEXT);
         printf("Previous: %d  ", PREVIOUS);
-        printf("Stop: %d\n", STOP);
+        printf("Stop: %d\n", STOP_DISP);
         printf("\nEnter response: ");
 
         char response[6];
@@ -53,7 +53,7 @@ void display_interface(HSTMT *h_statement)
                 starting_entry = 1;
             break;
         // stop displaying entries
-        case STOP:
+        case STOP_DISP:
             stop = true;
             break;
         default:

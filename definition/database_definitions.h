@@ -134,7 +134,7 @@ void add_part_to_connection_struct(connection_struct *connection, connection_par
 connection_part *create_connection_part(char *variable, char *value);
 void free_connection_part(connection_part *part);
 void free_connection_struct(connection_struct *connection);
-char *create_string_memory(int size);
+char *create_string_memory(size_t size);
 
 // intial setup
 int get_option_from_user(char *user_input, char *message);

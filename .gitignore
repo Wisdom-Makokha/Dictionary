@@ -17,4 +17,4 @@ generated/
 *.txt
 
 #ignore database integration solution
-data_source/Refresh_DB fill/
+data_source/Refresh_DB\ fill/

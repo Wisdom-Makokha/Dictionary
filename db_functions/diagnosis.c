@@ -3,7 +3,7 @@
 // function to extract error info from the occurred issues
 void get_diagnostics(char *function, SQLHANDLE handle, SQLSMALLINT type)
 {
-    SQLINTEGER i = 0;
+    SQLSMALLINT i = 0;
     SQLINTEGER native_code;
     char sql_state[7];
     char error_text[1024];
@@ -34,7 +34,7 @@ int write_logs(char *state, long int code, char *message, const char *function)
     if (new_open_file(&log_file) != OP_SUCCESS)
         return OP_FAILURE;
 
-    char *log_entry_format = "[%7.5s], %9ld, %s, %s\n";
+    char *log_entry_format = "[%5.5s], %5ld, %s, %s\n";
 
     // print the entry to the file
     fprintf(log_file.fileptr, log_entry_format, state, code, message, function);

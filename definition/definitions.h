@@ -26,14 +26,14 @@ typedef struct dictionary_entry
     char *word;
     // an array of strings where the definitions will be stored
     char **definitions;
-    int definition_count;
+    unsigned definition_count;
 } dic_entry;
 
 // structure for the dictionary to make it easier to work with
 typedef struct dictionary
 {
     dic_entry **entries;
-    int number_of_entries;
+    unsigned number_of_entries;
 } full_dictionary;
 
 // UI
@@ -60,7 +60,7 @@ dic_entry *search_entry(char *word, HSTMT *h_statement);
 
 // display
 void display_entry(dic_entry *entry_display, FILE *fileptr);
-void display_no_of_entries(full_dictionary *dict_struct, int starting_entry, FILE *fileptr, int number_of_entries);
+void display_no_of_entries(full_dictionary *dict_struct, unsigned starting_entry, FILE *fileptr, unsigned number_of_entries);
 
 // multi record retrieval
-int retrieve_records(HSTMT *h_statement, full_dictionary *dictionary, unsigned *starting_entry, int number_of_entries);
+int retrieve_records(HSTMT *h_statement, full_dictionary *dictionary, unsigned *starting_entry, unsigned number_of_entries);

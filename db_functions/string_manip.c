@@ -1,7 +1,7 @@
 #include "../definition/database_definitions.h"
 
 // function to create memory for a character string
-char *create_string_memory(int size)
+char *create_string_memory(size_t size)
 {
     // allocate new memory
     char *new_char_pointer = (char *)malloc(sizeof(char) * size);
@@ -40,7 +40,7 @@ char *create_connection_part_string(char const *variable, char const *value)
     size_t length = 0;
 
     // get the length of the string to be generated
-    length = snprintf(
+    length = (unsigned)snprintf(
         NULL,
         length,
         string_part_format,
@@ -88,7 +88,7 @@ char *new_create_data_source_string(connection_struct *connection_str)
     // set the first character to null character for strncat function
     data_source_str[0] = '\0';
 
-    int empty_space = MAX_DSN_CONNECTION_LEN;
+    unsigned empty_space = MAX_DSN_CONNECTION_LEN;
     for (unsigned index = 0; index < connection_str->number_of_parts; index++)
     {
         char *new_part = create_connection_part_string(connection_str->parts[index]->variable, connection_str->parts[index]->value);
@@ -96,7 +96,7 @@ char *new_create_data_source_string(connection_struct *connection_str)
         if (new_part != NULL)
         {
             strncat(data_source_str, new_part, empty_space);
-            empty_space -= strlen(new_part);
+            empty_space -= (unsigned int)strlen(new_part);
 
             free(new_part);
         }
@@ -154,7 +154,7 @@ void free_connection_part(connection_part *part)
 void free_connection_struct(connection_struct *connection)
 {
     // loop through the parts and free those first then free the entire struct
-    for (int i = connection->number_of_parts - 1; i >= 0; i--)
+    for (int i = (int)connection->number_of_parts - 1; i >= 0; i--)
         free_connection_part(connection->parts[i]);
 
     free(connection);

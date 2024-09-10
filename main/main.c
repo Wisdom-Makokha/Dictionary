@@ -14,9 +14,10 @@ int main(void)
     // the options are meant to be permanent
     char *specifications[] = {
         "program_name",
-        "-f",
-        "dictionary_connection",
-    };
+        "-f", "dictionary_connection",
+        "-db", "Dictionary",
+        "-dsn", "Test_DSN",
+        "-s", "dictionary_connection"};
 
     int number_of_args = _countof(specifications);
 

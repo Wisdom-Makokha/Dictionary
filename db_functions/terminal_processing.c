@@ -35,7 +35,7 @@ terminal_options *create_options_struct(char **database_name, char **dsn, char *
 int terminal_processing(int argc, char **argv, terminal_options *options_to_set)
 {
     int dash = 0;
-    int option = 1;
+    int selection = 1;
     int result = OP_SUCCESS;
     unsigned longest_option = 6;
 
@@ -51,17 +51,17 @@ int terminal_processing(int argc, char **argv, terminal_options *options_to_set)
         // -fldsn dictionary_connection -svfl dictionary_connection -db Dictionary -dsn Test_DSN
         if ((strlen(argv[index]) <= longest_option) && argv[index][dash] == '-')
         {
-            switch (tolower(argv[index][option]))
+            switch (tolower(argv[index][selection]))
             {
-            // database and dsn options
+            // database and dsn selections
             case 'd':
-                switch (tolower(argv[index][option + 1]))
+                switch (tolower(argv[index][selection + 1]))
                 {
-                // dsn option
+                // dsn selection
                 case 's':
                     if (!(options_to_set->dsn.option_is_set))
                     {
-                        // set option to no longer missing
+                        // set selection to no longer missing
                         options_to_set->dsn.option_is_set = true;
 
                         index++;
@@ -71,11 +71,11 @@ int terminal_processing(int argc, char **argv, terminal_options *options_to_set)
                         index++;
 
                     break;
-                // database option
+                // database selection
                 case 'b':
                     if (!(options_to_set->database_name.option_is_set))
                     {
-                        // set option to no longer missing
+                        // set selection to no longer missing
                         options_to_set->database_name.option_is_set = true;
 
                         index++;
@@ -89,32 +89,32 @@ int terminal_processing(int argc, char **argv, terminal_options *options_to_set)
                     break;
                 }
                 break;
-            // filedsn option
+            // filedsn selection
             case 'f':
                 if (!(options_to_set->fileDSN.option_is_set))
                 {
-                    // set option no longer missing
+                    // set selection no longer missing
                     options_to_set->fileDSN.option_is_set = true;
 
                     index++;
-                    // set option value
+                    // set selection value
                     *(options_to_set->fileDSN.string_value) = argv[index];
                 }
                 else
                     index++;
 
                 break;
-            // savefile option
+            // savefile selection
             case 's':
                 // check if save file has been set before since trying to set it twice is possible
                 if (!(options_to_set->savefileDSN.option_is_set))
                 {
-                    // set option no longer missing
+                    // set selection no longer missing
                     options_to_set->savefileDSN.option_is_set = true;
 
                     index++;
 
-                    // set option value
+                    // set selection value
                     *(options_to_set->savefileDSN.string_value) = argv[index];
                 }
                 else
@@ -160,7 +160,7 @@ void confirm_options(terminal_options *set_options)
             break;
         else if (response[0] == 'n')
         {
-            printf("\nWhich option do you want to change: (Enter the number for your picked option)\n");
+            printf("\nWhich selection do you want to change: (Enter the number for your picked selection)\n");
             printf("%15s: %d\n", "  Database name", TO_DATABASE_NAME - 99);
             printf("%15s: %d\n", "  DSN", TO_DSN - 99);
             printf("%15s: %d\n", "  Save file", TO_SAVE_FILE - 99);

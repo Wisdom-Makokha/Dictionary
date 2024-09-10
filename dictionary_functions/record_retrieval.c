@@ -1,7 +1,7 @@
 #include "../definition/definitions.h"
 
 // function to retrieve a given number of records from the database
-int retrieve_records(HSTMT *h_statement, full_dictionary *dictionary, unsigned *starting_entry, int ending_entry)
+int retrieve_records(HSTMT *h_statement, full_dictionary *dictionary, unsigned *starting_entry, unsigned ending_entry)
 {
     // printf("Starting record retrieval!\n");
     int result = OP_SUCCESS;

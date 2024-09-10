@@ -4,7 +4,7 @@
 COMPILER = gcc
 
 # Compiler flags
-CFLAGS = -Wall -Wextra
+CFLAGS = -Wall -Wextra -Wshadow -Wstrict-prototypes -Wconversion -Wunreachable-code
 
 #HEADERS
 HEADERS = $(wildcard headers/*.h)

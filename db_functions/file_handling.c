@@ -15,7 +15,7 @@ int new_open_file(new_file *file_to_open)
     }
 
     // truncate the mode to the right size if it exceeds the expected size
-    unsigned mode_size = strlen(file_to_open->mode);
+    size_t mode_size = strlen(file_to_open->mode);
     if (mode_size > mode_limit)
         file_to_open->mode[mode_limit] = '\0';
 

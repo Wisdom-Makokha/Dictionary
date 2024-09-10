@@ -17,7 +17,7 @@ dic_entry *search_entry(char *word, HSTMT *h_statement)
     size_t length = 0;
 
     // check that our word does not exceed a certain size
-    length = snprintf(NULL, length, statement_format, word);
+    length = (unsigned)snprintf(NULL, length, statement_format, word);
     if (length >= (strlen(statement_format) + MAX_WORD_SIZE))
     {
         write_logs("LONG_STR", MAX_STR_LENGTH_EXCEEDED_ERROR, "Length of search statement exceeds allowed limit", __func__);
@@ -55,6 +55,8 @@ dic_entry *search_entry(char *word, HSTMT *h_statement)
         add_entry_data(new_entry, word, (char *)definition);
         number_of_records++;
     }
+    // close the cursor
+    SQLCloseCursor(*h_statement);
 
     // check that we have retrieved some records
     if (number_of_records == 0)

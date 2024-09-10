@@ -16,7 +16,7 @@ void add_definition_to_entry(dic_entry *entry, char *definition)
     definition += 3;
 
     // get definition length then reduce the length to remove the last 3 quotation marks
-    int length = strlen(definition) - 3;
+    size_t length = strlen(definition) - 3;
 
     // remove the quotation marks
     // since there's a possibility that those quotation marks are what is affecting the length of the given string
@@ -24,7 +24,7 @@ void add_definition_to_entry(dic_entry *entry, char *definition)
 
     if ((length) > MAX_DEF_SIZE)
     {
-        fprintf(stderr, "Definition truncated in the function: %s\nString length: %d\n", __func__, length);
+        fprintf(stderr, "Definition truncated in the function: %s\nString length: %lld\n", __func__, length);
         write_logs("TRUNC", DATA_TRUNCATION, "Definition truncated", __func__);
         length = MAX_DEF_SIZE;
         definition[length - 1] = '\0';

@@ -29,7 +29,7 @@ void add_entry_data(dic_entry *entry, char *word, char *definition)
     {
         // this is an attempt to be more efficient and in control of the memory for the words
         // the length of the word is checked and cutoff if it exceeds our set limit
-        int word_length = strlen(word);
+        size_t word_length = strlen(word);
 
         if (word_length > MAX_WORD_SIZE)
         {
@@ -75,7 +75,7 @@ void add_entry_to_dictionary(full_dictionary *dict_struct, dic_entry *entry)
 // function to free the memory for an entry
 void free_entry(dic_entry *entry)
 {
-    for (int i = entry->definition_count - 1; i >= 0; i--)
+    for (int i = (int) entry->definition_count - 1; i >= 0; i--)
         free(entry->definitions[i]);
 
     free(entry);
@@ -85,7 +85,7 @@ void free_entry(dic_entry *entry)
 void free_dictionary(full_dictionary *dictionary)
 {
     // loop through the entries from the last to the first
-    for (int i = dictionary->number_of_entries - 1; i >= 0; i--)
+    for (int i = (int)dictionary->number_of_entries - 1; i >= 0; i--)
         free_entry(dictionary->entries[i]);
 
     // free the dictionary
