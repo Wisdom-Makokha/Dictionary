@@ -4,7 +4,7 @@
 void search_interface(HSTMT *h_statement)
 {
     char word[MAX_WORD_SIZE];
-    printf("Enter the word you want to search for: ");
+    printf(ANSI_COLOR_YELLOW "Enter the word you want to search for: " ANSI_COLOR_RESET);
     fgets(word, MAX_WORD_SIZE, stdin);
 
     // try to have only a normal string without any spaces, tabs or newline characters

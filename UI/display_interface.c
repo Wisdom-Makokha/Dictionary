@@ -33,7 +33,7 @@ void display_interface(HSTMT *h_statement)
         printf("Next: %d  ", NEXT);
         printf("Previous: %d  ", PREVIOUS);
         printf("Stop: %d\n", STOP_DISP);
-        printf("\nEnter response: ");
+        printf(ANSI_COLOR_YELLOW "\nEnter response: " ANSI_COLOR_RESET);
 
         char response[6];
         fgets(response, 6, stdin);

@@ -15,7 +15,7 @@ void user_interface( HSTMT *h_display, HSTMT *h_search)
         printf("  -Search for an entry: %d\n", SEARCH);
         printf("  -Stop: %d\n", STOP);
 
-        printf("\nEnter response: ");
+        printf(ANSI_COLOR_YELLOW "\nEnter response: " ANSI_COLOR_RESET);
         fgets(str_response, 8, stdin);
         response = atoi(str_response);
 
